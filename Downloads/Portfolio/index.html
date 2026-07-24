@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pich Soksovann — Data Science &amp; AI Engineering</title>
+<meta name="description" content="Portfolio of Pich Soksovann — Data Science & AI Engineering student at CamTech University, Cambodia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        obsidian: '#0d1117',
+        obsidian2: '#090a0f',
+        surface: '#11161d',
+        edge: '#242c38',
+        heading: '#dbe2ea',
+        muted: '#9ca3af',
+        dim: '#5c6b7a',
+        gold: '#e3b341',
+        sky: '#4f9de0',
+        mint: '#7ee0b8',
+      },
+      fontFamily: {
+        display: ['"Plus Jakarta Sans"','sans-serif'],
+        mono: ['"JetBrains Mono"','monospace'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  :root{
+    --bg-obsidian:#0d1117; --bg-obsidian2:#090a0f; --surface:#11161d; --edge:#242c38;
+    --heading:#dbe2ea; --muted:#9ca3af; --dim:#5c6b7a;
+    --gold:#e3b341; --sky:#4f9de0; --mint:#7ee0b8;
+  }
+  *{ scroll-behavior:smooth; }
+  html,body{ background:var(--bg-obsidian); color:var(--heading); font-family:'Plus Jakarta Sans',sans-serif; overflow-x:hidden; }
+  ::selection{ background:var(--gold); color:#0d1117; }
+
+  /* subtle grid overlay */
+  .grid-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(rgba(219,226,234,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(219,226,234,0.035) 1px, transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .noise{
+    position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .glass{ background:rgba(17,22,29,0.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid var(--edge); }
+  .card{ background:var(--surface); border:1px solid var(--edge); }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+
+  .text-gradient{
+    background:linear-gradient(90deg,#dbe2ea 0%, #e3b341 45%, #dbe2ea 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:220% auto; animation:sheen 7s linear infinite;
+  }
+  @keyframes sheen{ to{ background-position:-220% center; } }
+
+  /* splash screen */
+  #splash{ position:fixed; inset:0; z-index:100; background:var(--bg-obsidian2); display:flex; align-items:center; justify-content:center; transition:opacity .7s ease, visibility .7s ease; }
+  #splash.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  #splash-text{ font-family:'JetBrains Mono',monospace; font-size:clamp(0.95rem,2.6vw,1.6rem); color:var(--heading); letter-spacing:.02em; }
+  #splash-cursor{ display:inline-block; width:.55em; background:var(--gold); margin-left:2px; animation:blink 1s steps(1) infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* nav pill */
+  #navpill a{ position:relative; }
+  #navpill a.active{ color:var(--bg-obsidian2); background:var(--gold); }
+  #navpill a:not(.active):hover{ color:var(--heading); background:rgba(255,255,255,0.05); }
+
+  .status-dot{ box-shadow:0 0 0 0 rgba(126,224,184,.7); animation:pulse-dot 2s infinite; }
+  @keyframes pulse-dot{
+    0%{ box-shadow:0 0 0 0 rgba(126,224,184,.55); }
+    70%{ box-shadow:0 0 0 8px rgba(126,224,184,0); }
+    100%{ box-shadow:0 0 0 0 rgba(126,224,184,0); }
+  }
+
+  #cycler{ border-right:2px solid var(--gold); white-space:nowrap; overflow:hidden; }
+
+  /* lanyard */
+  .lanyard-wrap{ perspective:900px; }
+  .lanyard-strap{ width:3px; height:70px; background:repeating-linear-gradient(180deg,var(--gold) 0 8px, #7a5f22 8px 16px); margin:0 auto; border-radius:2px; }
+  .id-card{ transform-origin:top center; animation:swing 4.6s ease-in-out infinite; }
+  @keyframes swing{
+    0%,100%{ transform:rotate(-3deg); }
+    50%{ transform:rotate(3deg); }
+  }
+  .id-card:hover{ animation-play-state:paused; }
+
+  .chevron-bounce{ animation:chevbounce 1.8s ease-in-out infinite; }
+  @keyframes chevbounce{ 0%,100%{ transform:translateY(0); opacity:.5; } 50%{ transform:translateY(8px); opacity:1; } }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .section-tag{ font-family:'JetBrains Mono',monospace; letter-spacing:.18em; font-size:.72rem; }
+
+  /* skill badge */
+  .badge{ border:1px solid var(--edge); background:rgba(255,255,255,0.02); font-family:'JetBrains Mono',monospace; }
+
+  /* project card hover */
+  .proj-card{ transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease; }
+  .proj-card:hover{ transform:translateY(-6px); border-color:var(--gold); box-shadow:0 20px 45px -20px rgba(227,179,65,.25); }
+
+  /* modal */
+  .modal-backdrop{ background:rgba(6,8,11,0.82); backdrop-filter:blur(6px); }
+
+  /* terminal explorer */
+  .tree-line{ font-family:'JetBrains Mono',monospace; white-space:pre; }
+  .tree-toggle{ cursor:pointer; user-select:none; }
+  .tree-children{ overflow:hidden; max-height:0; transition:max-height .35s ease; }
+  .tree-children.open{ max-height:2000px; }
+  .caret{ display:inline-block; transition:transform .25s ease; }
+  .caret.open{ transform:rotate(90deg); }
+
+  /* achievement tabs */
+  .tab-btn.active{ color:var(--bg-obsidian2); background:var(--mint); border-color:var(--mint); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:var(--bg-obsidian2); }
+  ::-webkit-scrollbar-thumb{ background:var(--edge); border-radius:6px; }
+
+  a{ transition:color .2s ease; }
+  .glow-gold{ box-shadow:0 0 0 1px rgba(227,179,65,.35), 0 8px 30px -12px rgba(227,179,65,.35); }
+
+  input:focus-visible, button:focus-visible, a:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body class="relative">
+<div class="grid-overlay"></div>
+<div class="noise"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div id="splash-text" class="mono"><span id="splash-typed"></span><span id="splash-cursor">&nbsp;</span></div>
+</div>
+
+<div id="app" class="relative z-10">
+
+  <!-- ===== HEADER ===== -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-4">
+      <div class="glass rounded-2xl px-4 sm:px-5 py-3 flex items-center justify-between">
+        <a href="#home" class="mono text-sm sm:text-base text-heading font-medium tracking-tight">
+          pichsoksovann<span class="text-gold">.dev</span>
+        </a>
+        <nav id="navpill" class="hidden md:flex items-center gap-1 mono text-xs bg-white/[0.02] border border-edge rounded-full p-1">
+          <a href="#home" class="active px-3 py-1.5 rounded-full transition-colors duration-200">Home</a>
+          <a href="#information" class="px-3 py-1.5 rounded-full transition-colors duration-200">Information</a>
+          <a href="#project" class="px-3 py-1.5 rounded-full transition-colors duration-200">Project</a>
+          <a href="#work" class="px-3 py-1.5 rounded-full transition-colors duration-200">Work Experience</a>
+          <a href="#volunteer" class="px-3 py-1.5 rounded-full transition-colors duration-200">Volunteer</a>
+          <a href="#achievement" class="px-3 py-1.5 rounded-full transition-colors duration-200">Achievement</a>
+          <a href="#contact" class="px-3 py-1.5 rounded-full transition-colors duration-200">Contact</a>
+        </nav>
+        <button id="mnav-btn" class="md:hidden text-heading p-2 -mr-2" aria-label="Open menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <!-- mobile nav -->
+      <div id="mnav" class="hidden md:hidden mt-2 glass rounded-2xl p-3 mono text-sm flex flex-col gap-1">
+        <a href="#home" class="px-3 py-2 rounded-lg hover:bg-white/5">Home</a>
+        <a href="#information" class="px-3 py-2 rounded-lg hover:bg-white/5">Information</a>
+        <a href="#project" class="px-3 py-2 rounded-lg hover:bg-white/5">Project</a>
+        <a href="#work" class="px-3 py-2 rounded-lg hover:bg-white/5">Work Experience</a>
+        <a href="#volunteer" class="px-3 py-2 rounded-lg hover:bg-white/5">Volunteer</a>
+        <a href="#achievement" class="px-3 py-2 rounded-lg hover:bg-white/5">Achievement</a>
+        <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/5">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HOME / HERO ===== -->
+  <section id="home" class="relative min-h-screen flex flex-col justify-center pt-28 pb-16 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-center">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 badge rounded-full px-3 py-1.5 mb-6">
+          <span class="w-2 h-2 rounded-full bg-mint status-dot"></span>
+          <span class="mono text-[11px] tracking-widest text-mint">AVAILABLE FOR WORK</span>
+        </div>
+        <h1 class="font-display font-extrabold leading-[1.04] text-4xl sm:text-5xl lg:text-6xl text-heading">
+          <span class="text-gradient">Data Scientist</span><br>&amp; AI Engineer
+        </h1>
+        <p class="mt-5 mono text-lg sm:text-xl text-gold h-8">
+          <span id="cycler"></span>
+        </p>
+        <p class="mt-5 text-muted max-w-lg leading-relaxed">
+          I use data science to study the difficulties people face day to day, and AI engineering to
+          build tools that make life easier — based at CamTech University, Phnom Penh, Cambodia.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#project" class="inline-flex items-center gap-2 bg-gold text-obsidian2 font-semibold text-sm px-5 py-3 rounded-xl hover:brightness-110 transition">
+            <i data-lucide="folder-open" class="w-4 h-4"></i> View Projects
+          </a>
+          <a href="assets/docs/PICH-SOKSOVANN-CV.pdf" target="_blank" class="inline-flex items-center gap-2 border border-edge text-heading text-sm px-5 py-3 rounded-xl hover:border-gold transition">
+            <i data-lucide="download" class="w-4 h-4"></i> Download CV
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal lanyard-wrap flex justify-center lg:justify-end" style="transition-delay:.15s">
+        <div>
+          <div class="lanyard-strap"></div>
+          <div class="id-card w-56 sm:w-64 card rounded-2xl p-4 glow-gold">
+            <div class="flex items-center justify-between mb-3">
+              <span class="mono text-[10px] tracking-widest text-dim">ID · CAMTECH</span>
+              <span class="w-2 h-2 rounded-full bg-mint"></span>
+            </div>
+            <div class="rounded-xl overflow-hidden border border-edge mb-3 aspect-[3/4]">
+              <img src="assets/profile/hero-red-portrait.jpg" alt="Portrait of Pich Soksovann" class="w-full h-full object-cover">
+            </div>
+            <p class="font-display font-bold text-heading text-sm">Pich Soksovann</p>
+            <p class="mono text-[11px] text-sky mt-0.5">Data Science &amp; AI Engineering</p>
+            <div class="mt-3 pt-3 border-t border-edge flex items-center justify-between">
+              <span class="mono text-[10px] text-dim">Phnom Penh, KH</span>
+              <i data-lucide="qr-code" class="w-4 h-4 text-dim"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#information" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-dim mono text-[11px] tracking-widest">
+      SCROLL
+      <i data-lucide="chevron-down" class="w-4 h-4 chevron-bounce"></i>
+    </a>
+  </section>
+
+  <!-- ===== INFORMATION ===== -->
+  <section id="information" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">📁 INFORMATION</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-10 items-start">
+      <div class="reveal grid grid-cols-2 gap-4">
+        <div class="card rounded-2xl p-2 rotate-[-2deg] hover:rotate-0 transition-transform duration-300 row-span-2">
+          <img src="assets/profile/hero-red-portrait.jpg" alt="Pich Soksovann portrait" class="rounded-xl w-full h-full object-cover">
+          <p class="mono text-[10px] text-dim text-center mt-2 pb-1">hero-red-portrait.jpg</p>
+        </div>
+        <div class="card rounded-2xl p-2 rotate-[2deg] hover:rotate-0 transition-transform duration-300 mt-6">
+          <img src="assets/profile/linkedin-cv-profile.jpg" alt="Pich Soksovann LinkedIn portrait" class="rounded-xl w-full aspect-[3/4] object-cover">
+          <p class="mono text-[10px] text-dim text-center mt-2 pb-1">linkedin-cv-profile.jpg</p>
+        </div>
+        <div class="card rounded-2xl p-2 rotate-[-1.5deg] hover:rotate-0 transition-transform duration-300">
+          <img src="assets/profile/bw-starlight-portrait.jpeg" alt="Pich Soksovann monochrome portrait" class="rounded-xl w-full aspect-[3/4] object-cover grayscale">
+          <p class="mono text-[10px] text-dim text-center mt-2 pb-1">bw-starlight-portrait.jpeg</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay:.1s">
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-heading">Pich Soksovann</h2>
+        <p class="text-sky mono text-sm mt-1">Data Science &amp; AI Engineering Student · CamTech University</p>
+        <p class="text-muted leading-relaxed mt-5 max-w-xl">
+          I am a dedicated Data Science and AI Engineering student with a strong passion for solving
+          real-world problems. I use data science to study and understand the difficulties people face
+          in their daily lives, and AI engineering to build smart tools that make life easier and more
+          efficient. I'm committed to using my skills to drive technology and innovation in Cambodia.
+        </p>
+
+        <div class="mt-6 grid sm:grid-cols-2 gap-3 mono text-sm">
+          <a href="mailto:Sovann999iq@gmail.com" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="mail" class="w-4 h-4 shrink-0"></i> Sovann999iq@gmail.com</a>
+          <a href="mailto:sp6026010074@camtech.edu.kh" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="graduation-cap" class="w-4 h-4 shrink-0"></i> sp6026010074@camtech.edu.kh</a>
+          <a href="tel:+85517289107" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="phone" class="w-4 h-4 shrink-0"></i> +855 17 289 107</a>
+          <span class="flex items-center gap-2 text-muted"><i data-lucide="map-pin" class="w-4 h-4 shrink-0"></i> Phnom Penh, Cambodia</span>
+          <a href="https://t.me/PICH_SOKSOVANN" target="_blank" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="send" class="w-4 h-4 shrink-0"></i> t.me/PICH_SOKSOVANN</a>
+          <a href="https://github.com/Sovann8888" target="_blank" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="github" class="w-4 h-4 shrink-0"></i> github.com/Sovann8888</a>
+          <a href="https://linkedin.com/in/soksovann-pich" target="_blank" class="flex items-center gap-2 text-muted hover:text-gold"><i data-lucide="linkedin" class="w-4 h-4 shrink-0"></i> LinkedIn Profile</a>
+        </div>
+
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <a href="assets/docs/PICH-SOKSOVANN-CV.pdf" target="_blank" class="inline-flex items-center gap-2 bg-gold text-obsidian2 font-semibold text-sm px-5 py-3 rounded-xl hover:brightness-110 transition">
+            <i data-lucide="file-down" class="w-4 h-4"></i> Download Full CV (PDF)
+          </a>
+          <a href="https://drive.google.com/file/d/13ZXaTiWmQJcRa640Q6zblstYQKj8hTby/view?usp=sharing" target="_blank" class="inline-flex items-center gap-2 border border-edge text-heading text-sm px-5 py-3 rounded-xl hover:border-gold transition">
+            <i data-lucide="external-link" class="w-4 h-4"></i> View on Google Drive
+          </a>
+        </div>
+
+        <!-- Education -->
+        <div class="mt-12">
+          <p class="section-tag text-dim mb-4">// EDUCATION</p>
+          <div class="space-y-4">
+            <div class="card rounded-xl p-4 flex items-start justify-between gap-4">
+              <div>
+                <p class="font-display font-bold text-heading text-sm">CamTech University</p>
+                <p class="text-muted text-sm mt-0.5">Data Science &amp; AI Engineering</p>
+              </div>
+              <span class="mono text-xs text-mint shrink-0">2025 — Present</span>
+            </div>
+            <div class="card rounded-xl p-4 flex items-start justify-between gap-4">
+              <div>
+                <p class="font-display font-bold text-heading text-sm">Hun Sen Bun Rany Wat Phnom High School</p>
+                <p class="text-muted text-sm mt-0.5">High School</p>
+              </div>
+              <span class="mono text-xs text-dim shrink-0">2019 — 2025</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="mt-12">
+          <p class="section-tag text-dim mb-4">// CORE SKILLS</p>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <p class="mono text-xs text-sky mb-2">Languages</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Python</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">C</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">C++</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">HTML/CSS</span>
+              </div>
+            </div>
+            <div>
+              <p class="mono text-xs text-mint mb-2">AI / Data Science</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">AI Algorithm Concepts</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Claude AI</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Gemini</span>
+              </div>
+            </div>
+            <div>
+              <p class="mono text-xs text-gold mb-2">Frameworks &amp; Concepts</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Full-Stack Architecture</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Database Design</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">REST APIs</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Auth Systems</span>
+              </div>
+            </div>
+            <div>
+              <p class="mono text-xs text-muted mb-2">Tools</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Canva</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Microsoft Word</span>
+                <span class="badge text-heading text-xs px-2.5 py-1 rounded">Microsoft Excel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="mono text-[11px] text-dim">Leadership:</span>
+            <span class="text-[11px] text-muted">Team Leadership · Technical Direction · Project Management · Product Vision · Communication · Problem-Solving · Time Management · Teamwork</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECT ===== -->
+  <section id="project" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">📁 PROJECT</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="reveal card rounded-2xl p-6 sm:p-8 mb-10">
+      <p class="section-tag text-dim mb-3">// EXPERIENCE.MD — OVERVIEW</p>
+      <p class="text-muted leading-relaxed max-w-3xl">
+        Since December 2025 I've led three technical builds at CamTech University: an AI-powered health
+        triage platform, an AI-assisted rental management system for Cambodian landlords, and a
+        QR-based classroom attendance system — plus an ongoing redesign of the school library's website.
+        Each project paired a leadership role with hands-on architecture, from database schema design to
+        AI matching engines and OCR-driven automation.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- Attendance card -->
+      <div class="reveal proj-card card rounded-2xl overflow-hidden cursor-pointer" data-modal="modal-attendance">
+        <div class="aspect-video overflow-hidden border-b border-edge">
+          <img src="assets/attendance/1.png" alt="Attendance System screenshot" class="w-full h-full object-cover">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="mono text-[10px] text-gold badge px-2 py-0.5 rounded">attendance-system/</span>
+            <i data-lucide="qr-code" class="w-4 h-4 text-dim"></i>
+          </div>
+          <h3 class="font-display font-bold text-heading">Attendance System</h3>
+          <p class="text-muted text-sm mt-2 leading-relaxed">QR-based check-ins with tokens that refresh every 10 seconds, backed by a relational schema for students and records.</p>
+          <span class="inline-flex items-center gap-1 mono text-xs text-sky mt-4">View gallery <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+      </div>
+
+      <!-- Rental card -->
+      <div class="reveal proj-card card rounded-2xl overflow-hidden cursor-pointer" data-modal="modal-rental" style="transition-delay:.08s">
+        <div class="aspect-video overflow-hidden border-b border-edge">
+          <img src="assets/rental/landlord-Screenshot-From-2026-07-22-13-58-35.png" alt="Smart-RentHouse screenshot" class="w-full h-full object-cover">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="mono text-[10px] text-gold badge px-2 py-0.5 rounded">Rental_Management/</span>
+            <i data-lucide="home" class="w-4 h-4 text-dim"></i>
+          </div>
+          <h3 class="font-display font-bold text-heading">Smart-RentHouse (LordAI)</h3>
+          <p class="text-muted text-sm mt-2 leading-relaxed">React + Tailwind interface on a FastAPI backend, with OCR meter-reading and automated bill verification for landlords.</p>
+          <span class="inline-flex items-center gap-1 mono text-xs text-sky mt-4">View gallery <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+      </div>
+
+      <!-- AI-HeaRT card -->
+      <div class="reveal proj-card card rounded-2xl overflow-hidden cursor-pointer" data-modal="modal-aiheart" style="transition-delay:.16s">
+        <div class="aspect-video overflow-hidden border-b border-edge">
+          <img src="assets/aiheart/1.png" alt="AI-HeaRT screenshot" class="w-full h-full object-cover">
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="mono text-[10px] text-gold badge px-2 py-0.5 rounded">AI-HeaRT/</span>
+            <i data-lucide="heart-pulse" class="w-4 h-4 text-dim"></i>
+          </div>
+          <h3 class="font-display font-bold text-heading">AI-HeaRT</h3>
+          <p class="text-muted text-sm mt-2 leading-relaxed">Full-stack health triage app matching symptoms against a 100-disease database, with OTP auth and home-care guidance.</p>
+          <span class="inline-flex items-center gap-1 mono text-xs text-sky mt-4">View gallery <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PROJECT MODALS ===== -->
+  <div id="modal-attendance" class="modal fixed inset-0 z-[60] hidden items-center justify-center p-4 modal-backdrop">
+    <div class="card rounded-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto">
+      <div class="p-5 sm:p-6 border-b border-edge flex items-start justify-between gap-4 sticky top-0 bg-surface">
+        <div>
+          <h3 class="font-display font-bold text-xl text-heading">Attendance System</h3>
+          <p class="text-muted text-sm mt-1">Automated QR-based classroom check-ins with network-restricted, refreshing tokens.</p>
+          <a href="https://github.com/Sovann8888/attendance-system" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-sky mt-2 hover:text-gold"><i data-lucide="github" class="w-3.5 h-3.5"></i> github.com/Sovann8888/attendance-system</a>
+        </div>
+        <button class="modal-close text-dim hover:text-heading p-1" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 sm:p-6">
+        <p class="section-tag text-gold mb-5">// HOW IT WORKS</p>
+        <div class="space-y-8">
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">01</span><span class="text-heading text-sm leading-relaxed">Professor creates an account with full name + email, then verifies with the code sent — one account per professor.</span></div>
+            <img src="assets/attendance/1.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">02</span><span class="text-heading text-sm leading-relaxed">Professor adds students to a class — student ID, full name, major (optional), and subject.</span></div>
+            <img src="assets/attendance/2.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">03</span><span class="text-heading text-sm leading-relaxed">Professor views all their classes on one dashboard (e.g. Cyber Security, Data Science &amp; AI), each showing student count and session count.</span></div>
+            <img src="assets/attendance/3.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">04</span><span class="text-heading text-sm leading-relaxed">Opening a class shows students enrolled, sessions held, and a button to Start QR Attendance Session.</span></div>
+            <img src="assets/attendance/4.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">05</span><span class="text-heading text-sm leading-relaxed">Starting a session generates a live QR code ("Scan to Mark Attendance") that refreshes every second, restricted to students on school WiFi, with a live counter of students marked.</span></div>
+            <img src="assets/attendance/5.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">06</span><span class="text-heading text-sm leading-relaxed">Once a session ends, it's logged in the Attendance Session History (date/time, professor, status), and each student's record updates (e.g. sessions attended 0/1, 0/2) — exportable as CSV.</span></div>
+            <img src="assets/attendance/6.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-rental" class="modal fixed inset-0 z-[60] hidden items-center justify-center p-4 modal-backdrop">
+    <div class="card rounded-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto">
+      <div class="p-5 sm:p-6 border-b border-edge flex items-start justify-between gap-4 sticky top-0 bg-surface">
+        <div>
+          <h3 class="font-display font-bold text-xl text-heading">Smart-RentHouse (LordAI)</h3>
+          <p class="text-muted text-sm mt-1">Landlord &amp; tenant portals for billing, meter OCR and payment verification.</p>
+          <a href="https://github.com/Sovann8888/community-rental-management" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-sky mt-2 hover:text-gold"><i data-lucide="github" class="w-3.5 h-3.5"></i> github.com/Sovann8888/community-rental-management</a>
+        </div>
+        <button class="modal-close text-dim hover:text-heading p-1" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 sm:p-6">
+        <p class="section-tag text-gold mb-5">// HOW IT WORKS — LANDLORD SIDE</p>
+        <div class="space-y-8 mb-10">
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">01</span><span class="text-heading text-sm leading-relaxed">Log in with your phone number and choose "I am a Landlord."</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-13-58-35.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">02</span><span class="text-heading text-sm leading-relaxed">Dashboard shows a Property Management overview — total rooms managed, and a Room Directory listing each room's floor, renter, rent, and status (vacant/occupied).</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-00-56.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">03</span><span class="text-heading text-sm leading-relaxed">Tapping a room opens its profile — renter info, rent fee, payment status, next due date, and any maintenance issues.</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-01-09.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">04</span><span class="text-heading text-sm leading-relaxed">Meter Calculator — enter previous &amp; new water/electricity meter readings plus their rates, and it automatically calculates the utility cost breakdown.</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-01-25.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">05</span><span class="text-heading text-sm leading-relaxed">Invoice Creator — auto-generates a digital invoice (room rent + water + electricity = total due) and sends it to the renter with a KHQR payment code.</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-01-35.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">06</span><span class="text-heading text-sm leading-relaxed">Payment Checker — record new payments (ABA Bank/PayWay, amount, room, date) into a payment ledger, and share an ABA QR code so renters can pay directly.</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-01-44.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">07</span><span class="text-heading text-sm leading-relaxed">Maintenance Requests — tracks repair requests from renters, with counts for Open / In Progress / Resolved this month.</span></div>
+            <img src="assets/rental/landlord-Screenshot-From-2026-07-22-14-01-50.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+        </div>
+
+        <p class="section-tag text-sky mb-5">// HOW IT WORKS — RENTER SIDE</p>
+        <div class="space-y-8">
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-sky shrink-0 w-6 pt-0.5">01</span><span class="text-heading text-sm leading-relaxed">Welcome dashboard — shows room info, current bill (rent + utilities, due date), and latest water/electric meter readings, plus notifications (e.g. "meter reading due," "landlord viewed your report").</span></div>
+            <img src="assets/rental/tenant-Screenshot-From-2026-07-22-14-03-23.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-sky shrink-0 w-6 pt-0.5">02</span><span class="text-heading text-sm leading-relaxed">Submit Meter Reading — just take a live photo of the water and electricity meters; AI reads the numbers automatically instead of manual entry.</span></div>
+            <img src="assets/rental/tenant-Screenshot-From-2026-07-22-14-03-31.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-sky shrink-0 w-6 pt-0.5">03</span><span class="text-heading text-sm leading-relaxed">Request Maintenance — submit a new issue (type, description, urgency level) and track status under "My Requests."</span></div>
+            <img src="assets/rental/tenant-Screenshot-From-2026-07-22-14-03-34.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-sky shrink-0 w-6 pt-0.5">04</span><span class="text-heading text-sm leading-relaxed">My History — one place to see all past payments and submitted meter readings.</span></div>
+            <img src="assets/rental/tenant-Screenshot-From-2026-07-22-14-03-38.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-aiheart" class="modal fixed inset-0 z-[60] hidden items-center justify-center p-4 modal-backdrop">
+    <div class="card rounded-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto">
+      <div class="p-5 sm:p-6 border-b border-edge flex items-start justify-between gap-4 sticky top-0 bg-surface">
+        <div>
+          <h3 class="font-display font-bold text-xl text-heading">AI-HeaRT</h3>
+          <p class="text-muted text-sm mt-1">AI probability-matching health triage engine with OTP auth and personalized home-care guidance.</p>
+          <a href="https://github.com/Sovann8888/AI-HeaRT" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-sky mt-2 hover:text-gold"><i data-lucide="github" class="w-3.5 h-3.5"></i> github.com/Sovann8888/AI-HeaRT</a>
+        </div>
+        <button class="modal-close text-dim hover:text-heading p-1" aria-label="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-5 sm:p-6">
+        <p class="section-tag text-gold mb-5">// HOW IT WORKS</p>
+        <div class="space-y-8">
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">01</span><span class="text-heading text-sm leading-relaxed">Welcome: Log in using your phone number and verify via the OTP notification — one number per patient.</span></div>
+            <img src="assets/aiheart/1.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">02</span><span class="text-heading text-sm leading-relaxed">Patients can input their symptoms.</span></div>
+            <img src="assets/aiheart/2.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">03</span><span class="text-heading text-sm leading-relaxed">They can also search for their symptoms using the search bar.</span></div>
+            <img src="assets/aiheart/3.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">04</span><span class="text-heading text-sm leading-relaxed">It analyzes all input symptoms then calculates the probability of matching conditions.</span></div>
+            <div class="space-y-3">
+              <img src="assets/aiheart/4.1.png" class="rounded-lg border border-edge w-full object-cover">
+              <img src="assets/aiheart/4.2.png" class="rounded-lg border border-edge w-full object-cover">
+            </div>
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">05</span><span class="text-heading text-sm leading-relaxed">Shows the most likely condition with its match %, risk level (e.g. High Risk / Emergency), and matched symptoms.</span></div>
+            <img src="assets/aiheart/5.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">06</span><span class="text-heading text-sm leading-relaxed">Also lists other possible conditions, ranked by probability, along with their risk levels.</span></div>
+            <img src="assets/aiheart/6.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">07</span><span class="text-heading text-sm leading-relaxed">Tapping a condition opens its Overview — a plain-language explanation of what it is and how serious it is.</span></div>
+            <img src="assets/aiheart/7.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">08</span><span class="text-heading text-sm leading-relaxed">Shows the Symptoms tab — which of your symptoms matched, and which remaining symptoms of that disease you don't have.</span></div>
+            <img src="assets/aiheart/8.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">09</span><span class="text-heading text-sm leading-relaxed">Shows the Precautions tab — steps to take (and why) for that condition.</span></div>
+            <img src="assets/aiheart/9.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">10</span><span class="text-heading text-sm leading-relaxed">Shows the Diet tab — recommended foods and why they help.</span></div>
+            <img src="assets/aiheart/10.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">11</span><span class="text-heading text-sm leading-relaxed">Shows the Workout tab — safe activity recommendations for that condition.</span></div>
+            <img src="assets/aiheart/11.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">12</span><span class="text-heading text-sm leading-relaxed">Shows the Medication tab — informational medication guidance (not a prescription — always consult a doctor/pharmacist).</span></div>
+            <img src="assets/aiheart/12.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">13</span><span class="text-heading text-sm leading-relaxed">For low-risk results, it gives a "Home Care" verdict instead of an emergency warning.</span></div>
+          </div>
+          <div>
+            <div class="flex gap-3 mb-3"><span class="mono text-xs text-gold shrink-0 w-6 pt-0.5">14</span><span class="text-heading text-sm leading-relaxed">Opens the Home Care Plan — a personalized day-by-day plan (Care Steps, Diet, Activity, Medication, Daily Tracker) based on the patient's profile.</span></div>
+            <img src="assets/aiheart/14-end.png" class="rounded-lg border border-edge w-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WORK EXPERIENCE ===== -->
+  <section id="work" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">📁 WORK EXPERIENCE</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="relative pl-8">
+      <div class="absolute left-[7px] top-1 bottom-1 w-px bg-edge"></div>
+
+      <div class="reveal relative pb-10">
+        <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-gold ring-4 ring-obsidian"></span>
+        <p class="mono text-xs text-dim">2019 — Present</p>
+        <h3 class="font-display font-bold text-heading mt-1">Rental Property Assistant</h3>
+        <p class="text-sky text-sm mono">House Rental</p>
+        <ul class="mt-2 text-muted text-sm space-y-1 list-disc list-inside">
+          <li>Welcomed guests and led room inspections to match customer needs</li>
+          <li>Explained rental process, house rules and security measures</li>
+        </ul>
+      </div>
+
+      <div class="reveal relative pb-10" style="transition-delay:.06s">
+        <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-gold ring-4 ring-obsidian"></span>
+        <p class="mono text-xs text-dim">May 2026 — Jul 2026</p>
+        <h3 class="font-display font-bold text-heading mt-1">Business Lead</h3>
+        <p class="text-sky text-sm mono">Entrepreneurship Project · CamTech University</p>
+        <ul class="mt-2 text-muted text-sm space-y-1 list-disc list-inside">
+          <li>Led a venture from holiday-season market research through full execution</li>
+          <li>Managed daily operations — customer service, content, internal comms</li>
+          <li>Directed closing finances, donating 40% of profits to JCI autism charity</li>
+        </ul>
+      </div>
+
+      <div class="reveal relative pb-10" style="transition-delay:.12s">
+        <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-gold ring-4 ring-obsidian"></span>
+        <p class="mono text-xs text-dim">Jan 2026 — May 2026</p>
+        <h3 class="font-display font-bold text-heading mt-1">Seller</h3>
+        <p class="text-sky text-sm mono">Paris Miki</p>
+        <ul class="mt-2 text-muted text-sm space-y-1 list-disc list-inside">
+          <li>Registered patient information and checked eye prescriptions</li>
+          <li>Recommended lens types and sold glasses to customers</li>
+        </ul>
+      </div>
+
+      <div class="reveal relative" style="transition-delay:.18s">
+        <span class="absolute -left-8 top-1 w-3.5 h-3.5 rounded-full bg-gold ring-4 ring-obsidian"></span>
+        <p class="mono text-xs text-dim">Dec 2024 — Mar 2025</p>
+        <h3 class="font-display font-bold text-heading mt-1">Online Seller</h3>
+        <p class="text-sky text-sm mono">Aiaoon Baby Brand</p>
+        <ul class="mt-2 text-muted text-sm space-y-1 list-disc list-inside">
+          <li>Managed inventory and prepared on-time deliveries</li>
+          <li>Sold $3,000 worth of baby products in 3 months</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VOLUNTEER ===== -->
+  <section id="volunteer" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">📁 VOLUNTEER</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div class="reveal card rounded-2xl p-6">
+        <i data-lucide="line-chart" class="w-5 h-5 text-mint mb-3"></i>
+        <h3 class="font-display font-bold text-heading">Research &amp; Policy</h3>
+        <p class="mono text-xs text-dim mt-0.5">Research Facilitator &amp; Data Collector · Jan 2026</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Coordinated group discussions with business owners on infrastructure and financial challenges for the MSMEs Landscape validation workshop.</p>
+        <a href="assets/docs/MSMEs-Landscape-in-Cambodia.pdf" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-mint mt-4 hover:text-heading"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> MSMEs Landscape in Cambodia.pdf</a>
+      </div>
+
+      <div class="reveal card rounded-2xl p-6" style="transition-delay:.06s">
+        <i data-lucide="users" class="w-5 h-5 text-sky mb-3"></i>
+        <h3 class="font-display font-bold text-heading">Youth &amp; Leadership</h3>
+        <p class="mono text-xs text-dim mt-0.5">Academy Team · Mar 2025 – May 2025</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Helped organize activities for 3,000 students at the International Youth Fellowship, guiding them toward future career passions.</p>
+        <a href="assets/docs/International-Youth-Fellowship-Cambodia.pdf" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-mint mt-4 hover:text-heading"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Youth Fellowship Cambodia.pdf</a>
+      </div>
+
+      <div class="reveal card rounded-2xl p-6" style="transition-delay:.12s">
+        <i data-lucide="badge-check" class="w-5 h-5 text-gold mb-3"></i>
+        <h3 class="font-display font-bold text-heading">Competition Support</h3>
+        <p class="mono text-xs text-dim mt-0.5">Protocol &amp; Hospitality · Dec 2025</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Assisted experts from 11 countries and liaised with VIP guests at ASIP UNIIC &amp; CamTech's graduation day.</p>
+        <a href="assets/docs/UNIIC_ASIP_Certificate.pdf" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-mint mt-4 hover:text-heading"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> UNIIC_ASIP_Certificate.pdf</a>
+      </div>
+
+      <div class="reveal card rounded-2xl p-6" style="transition-delay:.18s">
+        <i data-lucide="graduation-cap" class="w-5 h-5 text-mint mb-3"></i>
+        <h3 class="font-display font-bold text-heading">Mentorship</h3>
+        <p class="mono text-xs text-dim mt-0.5">Mentor · Sep 2024 – Dec 2024</p>
+        <p class="text-muted text-sm mt-3 leading-relaxed">Guided students applying for scholarships abroad through the Cambodia Scholarship Center's application process.</p>
+        <a href="assets/docs/Cambodia-Scholarship-Center.pdf" target="_blank" class="inline-flex items-center gap-1.5 mono text-xs text-mint mt-4 hover:text-heading"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Cambodia Scholarship Center.pdf</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACHIEVEMENT ===== -->
+  <section id="achievement" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">📁 ACHIEVEMENT</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="reveal flex flex-wrap gap-2 mb-8 mono text-xs">
+      <button class="tab-btn active border border-edge px-4 py-2 rounded-full transition-colors" data-tab="english">English</button>
+      <button class="tab-btn border border-edge px-4 py-2 rounded-full transition-colors" data-tab="highschool">High School</button>
+      <button class="tab-btn border border-edge px-4 py-2 rounded-full transition-colors" data-tab="university">University</button>
+    </div>
+
+    <div class="reveal">
+      <div class="tab-panel" data-panel="english">
+        <div class="card rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 sm:items-center justify-between">
+          <div>
+            <h3 class="font-display font-bold text-heading text-lg">EF SET English Proficiency</h3>
+            <p class="text-muted text-sm mt-2">IELTS Cambodia Tutorial · Aug 2025 – Nov 2025<br>Completed a structured IELTS preparation course covering listening, reading, writing and speaking.</p>
+          </div>
+          <a href="assets/docs/EF-SET-Certificate.pdf" target="_blank" class="shrink-0 inline-flex items-center gap-2 badge text-mint text-xs px-4 py-2.5 rounded-xl hover:border-mint"><i data-lucide="file-text" class="w-4 h-4"></i> EF SET Certificate.pdf</a>
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="highschool">
+        <div class="card rounded-2xl p-6 sm:p-8">
+          <ul class="space-y-3 text-sm text-muted mb-6">
+            <li class="flex items-center gap-2">🥇 <span class="text-heading">Gold Medal</span> — Golden Gate American School Math Competition (2023)</li>
+            <li class="flex items-center gap-2">🥈 <span class="text-heading">Silver Medal</span> — SASMO International (2023)</li>
+            <li class="flex items-center gap-2">🥈 <span class="text-heading">Silver Medal</span> — Math Kangaroo (2023)</li>
+            <li class="flex items-center gap-2">🥉 <span class="text-heading">Bronze Medal</span> — Caribou Contest Cambodia (2023)</li>
+            <li class="flex items-center gap-2">🎖️ <span class="text-heading">Grade B</span> — Math Outstanding Student Cambodia (2023)</li>
+          </ul>
+          <div class="flex flex-wrap gap-2 mono text-xs">
+            <a href="assets/docs/Golden-Gate.pdf" target="_blank" class="badge text-heading px-3 py-1.5 rounded-lg hover:border-gold">Golden Gate.pdf</a>
+            <a href="assets/docs/Math-Kangaroo.pdf" target="_blank" class="badge text-heading px-3 py-1.5 rounded-lg hover:border-gold">Math Kangaroo.pdf</a>
+            <a href="assets/docs/SASMO.pdf" target="_blank" class="badge text-heading px-3 py-1.5 rounded-lg hover:border-gold">SASMO.pdf</a>
+            <a href="assets/docs/Caribou.pdf" target="_blank" class="badge text-heading px-3 py-1.5 rounded-lg hover:border-gold">Caribou.pdf</a>
+            <a href="assets/docs/MOSC.pdf" target="_blank" class="badge text-heading px-3 py-1.5 rounded-lg hover:border-gold">MOSC.pdf</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel hidden" data-panel="university">
+        <div class="card rounded-2xl p-6 sm:p-8">
+          <h3 class="font-display font-bold text-heading text-lg">CamTech University</h3>
+          <p class="text-sky mono text-sm mt-1">Data Science &amp; AI Engineering · 2025 – 2029 (Expected)</p>
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <div class="badge rounded-xl p-4">
+              <p class="mono text-[11px] text-dim">Year 1 · Term I</p>
+              <p class="font-display font-bold text-mint text-2xl mt-1">GPA 3.5</p>
+            </div>
+            <div class="badge rounded-xl p-4">
+              <p class="mono text-[11px] text-dim">Year 1 · Term II</p>
+              <p class="font-display font-bold text-muted text-2xl mt-1">Pending</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPLORER ===== -->
+  <section id="explorer" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal flex items-center gap-3 mb-10">
+      <span class="section-tag text-gold badge px-2.5 py-1 rounded">TERMINAL</span>
+      <div class="h-px flex-1 bg-edge"></div>
+    </div>
+
+    <div class="reveal card rounded-2xl overflow-hidden">
+      <div class="flex items-center gap-2 px-4 py-3 border-b border-edge bg-white/[0.02]">
+        <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+        <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+        <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+        <span class="mono text-xs text-dim ml-2">soksovann@portfolio:~/Portfolio</span>
+      </div>
+      <div id="tree" class="p-5 text-sm leading-7 overflow-x-auto"></div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT / FOOTER ===== -->
+  <footer id="contact" class="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28">
+    <div class="reveal card rounded-3xl p-8 sm:p-14 text-center relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-gold/10 blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-sky/10 blur-3xl"></div>
+      <p class="section-tag text-gold mb-4 relative">📁 CONTACT</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-heading relative">Let's build something useful.</h2>
+      <p class="text-muted mt-4 max-w-lg mx-auto relative">Open to internships, collaborations, and anything data or AI. I usually reply fastest on Telegram.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3 relative">
+        <a href="mailto:Sovann999iq@gmail.com" class="inline-flex items-center gap-2 bg-gold text-obsidian2 font-semibold text-sm px-5 py-3 rounded-xl hover:brightness-110 transition"><i data-lucide="mail" class="w-4 h-4"></i> Sovann999iq@gmail.com</a>
+        <a href="https://t.me/PICH_SOKSOVANN" target="_blank" class="inline-flex items-center gap-2 border border-edge text-heading text-sm px-5 py-3 rounded-xl hover:border-sky transition"><i data-lucide="send" class="w-4 h-4"></i> Telegram</a>
+        <a href="https://github.com/Sovann8888" target="_blank" class="inline-flex items-center gap-2 border border-edge text-heading text-sm px-5 py-3 rounded-xl hover:border-mint transition"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+        <a href="https://linkedin.com/in/soksovann-pich" target="_blank" class="inline-flex items-center gap-2 border border-edge text-heading text-sm px-5 py-3 rounded-xl hover:border-sky transition"><i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn</a>
+      </div>
+    </div>
+
+    <!-- ===== LEAVE A MESSAGE ===== -->
+    <div class="reveal card rounded-3xl p-8 sm:p-10 mt-8" style="transition-delay:.08s">
+      <p class="section-tag text-mint mb-2">// LEAVE A MESSAGE</p>
+      <h3 class="font-display font-bold text-heading text-xl mb-1">Say hello</h3>
+      <p class="text-muted text-sm mb-6">Drop a note below — it opens in your email app addressed to me, and I read every one.</p>
+      <form id="guestbook-form" action="https://formspree.io/f/mvzewyej" method="POST" class="grid sm:grid-cols-2 gap-4">
+        <input id="gb-name" name="name" type="text" required placeholder="Your name" class="bg-white/[0.02] border border-edge rounded-xl px-4 py-3 text-sm text-heading placeholder:text-dim focus:outline-none focus:border-gold sm:col-span-1">
+        <input id="gb-email" name="email" type="email" placeholder="Your email (optional)" class="bg-white/[0.02] border border-edge rounded-xl px-4 py-3 text-sm text-heading placeholder:text-dim focus:outline-none focus:border-gold sm:col-span-1">
+        <textarea id="gb-message" name="message" required placeholder="Your message" rows="4" class="bg-white/[0.02] border border-edge rounded-xl px-4 py-3 text-sm text-heading placeholder:text-dim focus:outline-none focus:border-gold sm:col-span-2"></textarea>
+        <button type="submit" id="gb-submit" class="sm:col-span-2 inline-flex items-center justify-center gap-2 bg-mint text-obsidian2 font-semibold text-sm px-5 py-3 rounded-xl hover:brightness-110 transition disabled:opacity-60">
+          <i data-lucide="send" class="w-4 h-4"></i> <span id="gb-submit-label">Post Message</span>
+        </button>
+        <p id="gb-status" class="sm:col-span-2 text-sm hidden"></p>
+      </form>
+    </div>
+
+    <p class="text-center mono text-xs text-dim mt-8">© 2026 Pich Soksovann · pichsoksovann.dev · Built with intent, one folder at a time.</p>
+    <div class="flex justify-center mt-3">
+      <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fsovann8888.github.io%2FPortfolio%2F&label=Visitors&countColor=%23e3b341&style=flat-square&labelColor=%2311161d" alt="Visitor count" class="h-5 opacity-80">
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ===== Splash screen typing =====
+  (function(){
+    const text = "Welcome to my Portfolio Website";
+    const el = document.getElementById('splash-typed');
+    let i = 0;
+    function type(){
+      if(i <= text.length){
+        el.textContent = text.slice(0,i);
+        i++;
+        setTimeout(type, 42);
+      } else {
+        setTimeout(()=>{
+          document.getElementById('splash').classList.add('hide');
+        }, 500);
+      }
+    }
+    type();
+  })();
+
+  // ===== Lucide icons =====
+  lucide.createIcons();
+
+  // ===== Guestbook "Leave a Message" -> Formspree =====
+  (function(){
+    const form = document.getElementById('guestbook-form');
+    if(!form) return;
+    const btn = document.getElementById('gb-submit');
+    const label = document.getElementById('gb-submit-label');
+    const status = document.getElementById('gb-status');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      btn.disabled = true;
+      label.textContent = 'Sending…';
+      status.classList.add('hidden');
+
+      try{
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if(res.ok){
+          form.reset();
+          status.textContent = "Message sent — thanks for reaching out! I'll get back to you soon.";
+          status.className = 'sm:col-span-2 text-sm text-mint';
+        } else {
+          throw new Error('Request failed');
+        }
+      } catch(err){
+        status.textContent = "Something went wrong sending that — feel free to email me directly at Sovann999iq@gmail.com instead.";
+        status.className = 'sm:col-span-2 text-sm text-red-400';
+      } finally {
+        btn.disabled = false;
+        label.textContent = 'Post Message';
+        status.classList.remove('hidden');
+      }
+    });
+  })();
+
+  // ===== Cycling subtitle typewriter =====
+  (function(){
+    const words = ["Junior Programmer","Fresh Graduate","Happy Coding!"];
+    const el = document.getElementById('cycler');
+    let wi = 0, ci = 0, deleting = false;
+    function tick(){
+      const word = words[wi];
+      if(!deleting){
+        ci++;
+        el.textContent = word.slice(0,ci);
+        if(ci === word.length){ deleting = true; setTimeout(tick, 1400); return; }
+      } else {
+        ci--;
+        el.textContent = word.slice(0,ci);
+        if(ci === 0){ deleting = false; wi = (wi+1) % words.length; }
+      }
+      setTimeout(tick, deleting ? 35 : 70);
+    }
+    tick();
+  })();
+
+  // ===== Scroll reveal =====
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:0.12 });
+    items.forEach(i=>io.observe(i));
+  })();
+
+  // ===== Sticky nav active state on scroll =====
+  (function(){
+    const sections = ['home','information','project','work','volunteer','achievement','contact'];
+    const links = document.querySelectorAll('#navpill a');
+    function setActive(id){
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+    }
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ setActive(e.target.id); } });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sections.forEach(id=>{ const s = document.getElementById(id); if(s) io.observe(s); });
+  })();
+
+  // ===== Mobile nav toggle =====
+  (function(){
+    const btn = document.getElementById('mnav-btn');
+    const menu = document.getElementById('mnav');
+    btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> menu.classList.add('hidden')));
+  })();
+
+  // ===== Project modals =====
+  (function(){
+    document.querySelectorAll('[data-modal]').forEach(card=>{
+      card.addEventListener('click', ()=>{
+        const modal = document.getElementById(card.dataset.modal);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    document.querySelectorAll('.modal').forEach(modal=>{
+      function close(){
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+      modal.addEventListener('click', (e)=>{ if(e.target === modal) close(); });
+      modal.querySelector('.modal-close')?.addEventListener('click', close);
+      document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
+    });
+  })();
+
+  // ===== Achievement tabs =====
+  (function(){
+    const btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        btns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.dataset.tab;
+        document.querySelectorAll('.tab-panel').forEach(p=>{
+          p.classList.toggle('hidden', p.dataset.panel !== key);
+        });
+      });
+    });
+  })();
+
+// ===== Interactive terminal file tree =====
+  (function(){
+    const data = [
+      { name:'📁 Home/', children:[] },
+      { name:'📁 Information/', children:[
+        '📄 PICH SOKSOVANN CV.pdf','🖼️ Portfolio profile.jpg','🖼️ linkedin | cv profile.jpg','📄 information.md','📄 skills.md'
+      ]},
+      { name:'📁 Project/', children:[
+        '📄 Experience.md',
+        { name:'📁 attendance-system/', children:['📄 link github attendance.md','📁 how it works/ (1.png – 6.png, Instructions.md)'] },
+        { name:'📁 Rental_Management/', children:['📄 link github Rental Management.md','📁 how it works/ (landlord acc, tenants acc, instructions.md)'] },
+        { name:'📁 AI-HeaRT/', children:['📄 link github AI HeaRT.md','📁 how it works/ (1.png – 14 end.png, instructions.md)'] },
+      ]},
+      { name:'📁 Work Experience/', children:['📄 Rental Property Assistant.md','📄 Business Lead.md','📄 Paris Miki Seller.md'] },
+      { name:'📁 Volunteer/', children:[
+        '📄 MSMEs Landscape in Cambodia.pdf','📄 International Youth Fellowship of Cambodia.pdf','📄 UNIIC_ASIP_Certificate.pdf','📄 Cambodia Scholarship Center.pdf'
+      ]},
+      { name:'📁 Achievement/', children:[
+        { name:'📁 English/', children:['📄 EF SET Certificate.pdf'] },
+        { name:'📁 high school/', children:['📄 Golden Gate.pdf','📄 Math Kangaroo.pdf','📄 high school competition.md','📄 Caribou.pdf','📄 SASMO.pdf','📄 MOSC.pdf'] },
+        { name:'📁 university/', children:['📄 university gpa.md'] },
+      ]},
+    ];
+
+    function colorFor(name){
+      if(name.startsWith('📁')) return 'text-gold';
+      if(name.startsWith('🖼️')) return 'text-sky';
+      if(name.startsWith('📄')) return 'text-mint';
+      return 'text-muted';
+    }
+
+    function render(nodes, depth){
+      let html = '';
+      nodes.forEach(node=>{
+        const isFolder = typeof node === 'object';
+        const name = isFolder ? node.name : node;
+        const pad = depth * 20;
+        if(isFolder && node.children && node.children.length){
+          html += `<div class="tree-toggle flex items-center gap-1 hover:bg-white/5 rounded px-1" style="padding-left:${pad}px" data-toggle>
+            <i data-lucide="chevron-right" class="caret w-3.5 h-3.5 text-dim shrink-0"></i>
+            <span class="tree-line ${colorFor(name)}">${name}</span>
+          </div>
+          <div class="tree-children">${render(node.children, depth+1)}</div>`;
+        } else {
+          html += `<div class="tree-line ${colorFor(name)} opacity-90 hover:opacity-100 flex items-center gap-1" style="padding-left:${pad+16}px">${name}</div>`;
+        }
+      });
+      return html;
+    }
+
+    const treeEl = document.getElementById('tree');
+    treeEl.innerHTML = render(data, 0);
+    lucide.createIcons();
+
+    treeEl.addEventListener('click', (e)=>{
+      const toggle = e.target.closest('[data-toggle]');
+      if(!toggle) return;
+      const caret = toggle.querySelector('.caret');
+      const children = toggle.nextElementSibling;
+      caret.classList.toggle('open');
+      children.classList.toggle('open');
+    });
+
+    // open Home + Information by default
+    treeEl.querySelectorAll('[data-toggle]').forEach((el,idx)=>{
+      if(idx <= 1){ el.click(); }
+    });
+  })();
+</script>
+</body>
+</html>
